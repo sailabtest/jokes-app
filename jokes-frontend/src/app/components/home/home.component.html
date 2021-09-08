@@ -1,0 +1,59 @@
+<div class="alert alert-warning" *ngIf="ErrorMsg" (click)="ErrorMsg = '';"><p>{{ErrorMsg}}</p></div>
+<div class="main">
+    <h2>Welcome to the database of cool jokes!</h2>
+
+    <div class="page_search_bar">
+        <div class="search_box_area">
+            <input type="text" autocomplete="off" [formControl]="searchingFormControl" name="search_box" placeholder="Search jokes here..." />
+        </div>
+        <div class="btns" *ngIf="showAlert !== 'add'">
+            <span class="_btn btn_save" (click)="showAlert = 'add';">Add New Joke</span>
+            <span class="_btn btn_save" (click)="getJokes();">Show All Jokes</span>
+        </div>
+    </div>
+
+    <div class="joke" *ngIf="showAlert">
+        <!--Add new joke-->
+        <div class="form add" *ngIf="showAlert == 'add';">
+            <h4>Add New Joke </h4>
+            <div class="_data inline_data">
+                <label>Joke <span class="required">*</span></label>
+                <input type="text" name="aname" [(ngModel)]="JokeName" maxlength="500" class="form-control" placeholder="Joke name here">
+            </div>
+            <div class="_data inline_data">
+                <label>Joke Type </label>
+                <input type="text" name="type" [(ngModel)]="JokeType" maxlength="25" class="form-control" placeholder="Joke Type Here">
+            </div>
+            <div class="_btn btn_save" (click)="addJoke()">Save</div>
+            <div class="_btn alert-danger" (click)="showAlert = false">Cancel</div>
+        </div>
+
+        <!--View/Delete/Update joke-->
+        <div class="form update view" *ngIf="showAlert == 'view';">
+            <h4>Manage Current Joke</h4>
+            <div class="_data inline_data">
+                <label>Joke <span class="required">*</span></label>
+                <input type="text" name="aname" [(ngModel)]="SelectedJoke.jokeName" maxlength="500" class="form-control" placeholder="Joke name here">
+            </div>
+            <div class="_data inline_data">
+                <label>Joke Type </label>
+                <input type="text" name="type" [(ngModel)]="SelectedJoke.jokeType" maxlength="25" class="form-control" placeholder="Joke Type Here">
+            </div>
+            <div class="_btn btn_save" (click)="updateJoke()">Update Joke</div>
+            <div class="_btn btn_save" (click)="deleteJoke()">Delete Joke</div>
+            <div class="_btn alert-danger" (click)="showAlert = false">Cancel</div>
+        </div>
+    </div>
+
+    <!--The list of jokes-->
+    <div class="jokes" *ngIf="JokesList; else noJokes">
+        <div *ngFor="let joke of JokesList;let i= index;" (click)="showAlert = 'view';SelectedJoke = joke;">{{joke.jokeName}}</div>
+    </div>
+    <!--Jokes not found-->
+    <ng-template #noJokes>
+        <span class="alert alert-warning">
+            Sorry no jokes found!
+        </span>        
+    </ng-template>
+
+</div>
