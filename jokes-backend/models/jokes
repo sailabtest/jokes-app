@@ -1,0 +1,21 @@
+module.exports = (sequelize, Sequelize) => {
+    return sequelize.define('jokes', {
+        jokeID: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        jokeName: {
+          type: Sequelize.STRING
+        }, 
+        jokeType: {
+          type: Sequelize.STRING
+        },
+        updatedAt: {
+          type: Sequelize.DATE
+        },
+        createdAt: {
+          type: Sequelize.DATE
+        }
+    }, {tableName: 'jokes'})
+}
